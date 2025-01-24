@@ -123,7 +123,6 @@ button[type="button"] {
     background-color: #218838 !important;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 768px) {
     main {
         padding: 15px;
@@ -321,14 +320,12 @@ button[type="button"] {
     box-shadow: 0 0 15px rgba(64, 26, 180, 0.8);
 }
 
-/* Centrer le dernier élément */
 .index_last-item {
     grid-column: span 2;
     justify-self: center;
     max-width: 60%;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .index_main-grid {
         grid-template-columns: 1fr;

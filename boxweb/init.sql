@@ -32,3 +32,5 @@ INSERT INTO vulnerabilities (validated, defi, level) VALUES (FALSE, 'sqli', 'moy
 INSERT INTO vulnerabilities (validated, defi, level) VALUES (FALSE, 'sqli', 'hard');
 INSERT INTO vulnerabilities (validated, defi, level) VALUES (FALSE, 'sqli', 'hard');
 INSERT INTO vulnerabilities (validated, defi, level) VALUES (FALSE, 'sqli', 'extreme');
+INSERT INTO vulnerabilities (validated, defi, level) VALUES (FALSE, 'rfi', 'hard');
+INSERT INTO vulnerabilities (validated, defi, level) VALUES (FALSE, 'rfi', 'extreme');
