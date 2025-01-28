@@ -58,7 +58,7 @@ if ($cardsResult->num_rows > 0) {
 <div class="cards-container">
     <?php foreach ($cards as $card): ?>
         <div class="card">
-            <a href="sqli<?= $card['id'] - 7 ?>.php">SLQI <?= $card['id'] - 7 ?></a>
+            <a href="sqli<?= $card['id'] - 11 ?>.php">SLQI <?= $card['id'] - 11 ?></a>
             <?php if ($card['validated']): ?>
                 <span>
                     Validé

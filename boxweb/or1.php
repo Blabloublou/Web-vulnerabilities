@@ -1,4 +1,7 @@
 <?php
+ob_start();
+?>
+<?php
 include("header.php");
 
 $servername = "db";
@@ -12,18 +15,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$query = "SELECT validated FROM vulnerabilities WHERE id = 7";
+$query = "SELECT validated FROM vulnerabilities WHERE id = 10";
 $result = $conn->query($query);
 $row = $result->fetch_assoc();
-$message = "";
-$alertType = "";
 $validated = $row['validated'];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'Désactiver') {
-        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 7";
+        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 10";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape désactivée avec succès !";
             $alertType = "danger";
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $alertType = "danger";
         }
     } elseif ($action === 'Valider') {
-        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 7";
+        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 10";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape validée avec succès !";
             $alertType = "success";
@@ -44,9 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
-
 
 <?php if (!empty($message)): ?>
     <script>
@@ -69,40 +67,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 <?php endif; ?>
 
-<h1>Gestion de l'étape de vulnérabilité</h1>
-
-<?php
-if (isset($_GET['message'])) {
-    $input = $_GET['message'];
-    $safeMessage = str_replace("<script>", "", $input);
-    echo "<p>$safeMessage</p>";
-}
-?>
-
-<h2>Soumettez un message</h2>
-<form method="GET">
-    <label for="message">Message :</label>
-    <input
-            type="text"
-            id="message"
-            name="message"
-            placeholder="Entrez un message ici"
-            required
-    >
+<form method="post">
+    <input type="text" name="redirect" placeholder="Le lien">
     <button type="submit">Envoyer</button>
 </form>
 
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $url = $_POST['redirect'];
+    header("Location: " . $url);
+    exit();
+}
+?>
+
 <?php if ($validated): ?>
-    <form method="POST">
-        <input type="submit" name="action" value="Désactiver">
-    </form>
+    <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
+        <form method="POST" style="padding: 16px;">
+            <button type="submit" name="action" value="Désactiver" class="btn btn-danger">Désactiver</button>
+        </form>
+    </div>
 <?php else: ?>
-    <form method="POST">
-        <input type="submit" name="action" value="Valider">
-    </form>
+    <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
+        <form method="POST" style="padding: 16px;">
+            <button type="submit" name="action" value="Valider" class="btn btn-success">Valider</button>
+        </form>
+    </div>
 <?php endif; ?>
 
 <?php
 $conn->close();
 include("./footer.php");
+ob_end_flush();
 ?>

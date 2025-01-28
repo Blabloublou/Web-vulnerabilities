@@ -24,15 +24,22 @@
                         <a class="nav-link" href="sqli.php">SQLI</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="comment.php">XSS</a>
+                        <a class="nav-link" href="xss.php">XSS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="rfi.php">RFI</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="upload.php" tabindex="-1" aria-disabled="true">Désactivé</a>
+                        <a class="nav-link disabled" href="csrf.php" tabindex="-1" aria-disabled="true">CSRF</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="lfi.php">LFI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="or.php">OR</a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>

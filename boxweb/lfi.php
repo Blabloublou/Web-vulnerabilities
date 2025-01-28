@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $query = "SELECT COUNT(*) AS total, SUM(validated) AS validated_count 
           FROM vulnerabilities 
-          WHERE defi = 'xss'";
+          WHERE defi = 'lfi'";
 $result = $conn->query($query);
 if (!$result) {
     die("Erreur lors de la requête pour la progression: " . $conn->error);
@@ -25,7 +25,7 @@ $totalSteps = $row['total'];
 $validatedSteps = $row['validated_count'];
 $progressPercentage = ($totalSteps > 0) ? ($validatedSteps / $totalSteps) * 100 : 0;
 
-$query = "SELECT id, validated, defi FROM vulnerabilities WHERE defi = 'xss'";
+$query = "SELECT id, validated, defi FROM vulnerabilities WHERE defi = 'lfi'";
 $cardsResult = $conn->query($query);
 if (!$cardsResult) {
     die("Erreur lors de la requête pour les cartes: " . $conn->error);
@@ -40,7 +40,7 @@ if ($cardsResult->num_rows > 0) {
 ?>
 
 <div class="container">
-    <h1 class="h1">Failles XSS</h1>
+    <h1 class="h1">Failles CSRF</h1>
 
     <div class="progress bar-lenght">
         <div
@@ -58,11 +58,15 @@ if ($cardsResult->num_rows > 0) {
 <div class="cards-container">
     <?php foreach ($cards as $card): ?>
         <div class="card">
-            <a href="xss<?= $card['id'] ?>.php">XSS <?= $card['id'] ?></a>
+            <a href="lfi<?= $card['id'] - 7 ?>.php">LFI <?= $card['id'] - 7 ?></a>
             <?php if ($card['validated']): ?>
-                <img src="icons/validated-icon.png" alt="Validé" class="icon">
+                <span>
+                    Validé
+                </span>
             <?php else: ?>
-                <img src="icons/disabled-icon.png" alt="Désactivé" class="icon">
+                <span>
+                    Non validé
+                </span>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>

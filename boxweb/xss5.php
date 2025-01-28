@@ -12,15 +12,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Récupérer l'état de "validated" de la table "vulnerabilities"
 $query = "SELECT validated FROM vulnerabilities WHERE id = 5";
 $result = $conn->query($query);
 $row = $result->fetch_assoc();
-$message = "";
-$alertType = "";
-$validated = $row['validated'];  // État de validated
-
-// Traiter la soumission du formulaire
+$validated = $row['validated'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
@@ -71,17 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 <?php endif; ?>
 
-<h1>Gestion de l'étape de vulnérabilité</h1>
-
 <?php
 if (isset($_GET['message'])) {
     $input = $_GET['message'];
-    $safeMessage = str_replace("script", "", $input);
+    $safeMessage = str_replace("<script>", "", $input);
     echo "<p>$safeMessage</p>";
 }
 ?>
 
-<h2>Soumettez un message</h2>
 <form method="GET">
     <label for="message">Message :</label>
     <input
@@ -95,13 +87,17 @@ if (isset($_GET['message'])) {
 </form>
 
 <?php if ($validated): ?>
-    <form method="POST">
-        <input type="submit" name="action" value="Désactiver">
-    </form>
+    <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
+        <form method="POST" style="padding: 16px;">
+            <button type="submit" name="action" value="Désactiver" class="btn btn-danger">Désactiver</button>
+        </form>
+    </div>
 <?php else: ?>
-    <form method="POST">
-        <input type="submit" name="action" value="Valider">
-    </form>
+    <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
+        <form method="POST" style="padding: 16px;">
+            <button type="submit" name="action" value="Valider" class="btn btn-success">Valider</button>
+        </form>
+    </div>
 <?php endif; ?>
 
 <?php

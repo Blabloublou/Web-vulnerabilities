@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$query = "SELECT validated FROM vulnerabilities WHERE id = 2";
+$query = "SELECT validated FROM vulnerabilities WHERE id = 13";
 $result = $conn->query($query);
 $row = $result->fetch_assoc();
 $validated = $row['validated'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'Désactiver') {
-        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 2";
+        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 13";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape désactivée avec succès !";
             $alertType = "danger";
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $alertType = "danger";
         }
     } elseif ($action === 'Valider') {
-        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 2";
+        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 13";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape validée avec succès !";
             $alertType = "success";
@@ -41,9 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
-
 
 <?php if (!empty($message)): ?>
     <script>
@@ -66,13 +64,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 <?php endif; ?>
 
+<form method="get">
+    <label for="id">Entrez un identifiant utilisateur :</label>
+    <input type="text" id="id" name="id" placeholder="identifiant">
+    <label for="username">Entrez un nom d'utilisateur :</label>
+    <input type="text" id="username" name="username" placeholder="Ex: admin">
+    <button type="submit">Rechercher</button>
+</form>
 
 <?php
-if (isset($_GET['message'])) {
-    echo "Message : " . $_GET['message'];
+if (isset($_GET['id']) && isset($_GET['username'])) {
+    $id = $_GET['id'];
+    $username = $_GET['username'];
+
+    $query = "SELECT * FROM users WHERE id = '$id' AND username = '$username'";
+
+    echo "<p>Requête exécutée : <code>$query</code></p>";
+
+    $result = $conn->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<p>Utilisateur : " . htmlspecialchars($row['username']) . "</p>";
+        }
+    } else {
+        echo "<p>Aucun utilisateur trouvé.</p>";
+    }
 }
 ?>
-<a href="?message=Hello">Envoyer un message</a>
 
 <?php if ($validated): ?>
     <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">

@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $query = "SELECT COUNT(*) AS total, SUM(validated) AS validated_count 
           FROM vulnerabilities 
-          WHERE defi = 'rfi'";
+          WHERE defi = 'or'";
 $result = $conn->query($query);
 if (!$result) {
     die("Erreur lors de la requête pour la progression: " . $conn->error);
@@ -25,7 +25,7 @@ $totalSteps = $row['total'];
 $validatedSteps = $row['validated_count'];
 $progressPercentage = ($totalSteps > 0) ? ($validatedSteps / $totalSteps) * 100 : 0;
 
-$query = "SELECT id, validated, defi FROM vulnerabilities WHERE defi = 'rfi'";
+$query = "SELECT id, validated, defi FROM vulnerabilities WHERE defi = 'or'";
 $cardsResult = $conn->query($query);
 if (!$cardsResult) {
     die("Erreur lors de la requête pour les cartes: " . $conn->error);
@@ -40,7 +40,7 @@ if ($cardsResult->num_rows > 0) {
 ?>
 
 <div class="container">
-    <h1 class="h1">Failles RFI</h1>
+    <h1 class="h1">Failles CSRF</h1>
 
     <div class="progress bar-lenght">
         <div
@@ -58,7 +58,7 @@ if ($cardsResult->num_rows > 0) {
 <div class="cards-container">
     <?php foreach ($cards as $card): ?>
         <div class="card">
-            <a href="rfi<?= $card['id'] - 5 ?>.php">RFI <?= $card['id'] - 5 ?></a>
+            <a href="or<?= $card['id'] - 9 ?>.php">OR <?= $card['id'] - 9 ?></a>
             <?php if ($card['validated']): ?>
                 <span>
                     Validé

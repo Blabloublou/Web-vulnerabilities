@@ -12,18 +12,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$query = "SELECT validated FROM vulnerabilities WHERE id = 8";
+$query = "SELECT validated FROM vulnerabilities WHERE id = 12";
 $result = $conn->query($query);
 $row = $result->fetch_assoc();
-$message = "";
-$alertType = "";
 $validated = $row['validated'];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'Désactiver') {
-        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 8";
+        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 12";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape désactivée avec succès !";
             $alertType = "danger";
@@ -33,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $alertType = "danger";
         }
     } elseif ($action === 'Valider') {
-        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 8";
+        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 12";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape validée avec succès !";
             $alertType = "success";
@@ -44,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
 
 <?php if (!empty($message)): ?>
@@ -68,48 +64,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 <?php endif; ?>
 
-<h1>Injection basique via $_POST</h1>
-
-<form method="post">
-    <label for="identifiant">Entrez un identifiant :</label>
-    <input type="text" id="identifiant" name="identifiant" placeholder="Entrez un identifiant">
-    <label for="password">Entrez un mot de passe :</label>
-    <input type="text" id="password" name="password" placeholder="Entrez un mot de passe">
-    <button type="submit">Envoyer</button>
+<form method="get">
+    <label for="id">Entrez un identifiant utilisateur :</label>
+    <input type="text" id="id" name="id" placeholder="identifiant">
+    <label for="username">Entrez un nom d'utilisateur :</label>
+    <input type="text" id="username" name="username" placeholder="Ex: admin">
+    <button type="submit">Rechercher</button>
 </form>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['identifiant'];
-    $password = $_POST['password'];
+if (isset($_GET['id']) && isset($_GET['username'])) {
+    $id = $_GET['id'];
+    $username = $_GET['username'];
 
-    $query = "SELECT * FROM users WHERE username = '$id' AND password = '$password'";
+    $query = "SELECT * FROM users WHERE id = '$id' AND username = '$username'";
+
+    echo "<p>Requête exécutée : <code>$query</code></p>";
 
     $result = $conn->query($query);
 
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<span style='background-color: #ffffff; padding: 8px; border-radius: 8px; color: black;'>Nom : " . $row['username'] . "<br></span>";
+            echo "<p>Utilisateur : " . htmlspecialchars($row['username']) . "</p>";
         }
     } else {
-        echo "<span style='background-color: #ffffff; padding: 8px; border-radius: 8px; color: black;'>Aucun utilisateur trouvé.</span>";
+        echo "<p>Aucun utilisateur trouvé.</p>";
     }
 }
+?>
 
-
-if ($validated): ?>
-<div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
-    <form method="POST" style="padding: 16px;">
-        <button type="submit" name="action" value="Désactiver" class="btn btn-danger">Désactiver</button>
-    </form>
-</div>
+<?php if ($validated): ?>
+    <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
+        <form method="POST" style="padding: 16px;">
+            <button type="submit" name="action" value="Désactiver" class="btn btn-danger">Désactiver</button>
+        </form>
+    </div>
 <?php else: ?>
-<div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
-    <form method="POST" style="padding: 16px;">
-        <button type="submit" name="action" value="Valider" class="btn btn-success">Valider</button>
-    </form>
-</div>
-
+    <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">
+        <form method="POST" style="padding: 16px;">
+            <button type="submit" name="action" value="Valider" class="btn btn-success">Valider</button>
+        </form>
+    </div>
 <?php endif; ?>
 
 <?php

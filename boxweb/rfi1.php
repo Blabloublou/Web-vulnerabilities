@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$query = "SELECT validated FROM vulnerabilities WHERE id = 15";
+$query = "SELECT validated FROM vulnerabilities WHERE id = 6";
 $result = $conn->query($query);
 $row = $result->fetch_assoc();
 $validated = $row['validated'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'Désactiver') {
-        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 15";
+        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 6";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape désactivée avec succès !";
             $alertType = "danger";
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $alertType = "danger";
         }
     } elseif ($action === 'Valider') {
-        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 15";
+        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 6";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape validée avec succès !";
             $alertType = "success";
@@ -63,9 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 <?php endif; ?>
-
-
-<h1>Injection SQL via un champ</h1>
 
 <form action="" method="post" enctype="multipart/form-data">
     <input type="file" name="image" id="fileInput" required>

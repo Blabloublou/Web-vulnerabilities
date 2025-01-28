@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$query = "SELECT validated FROM vulnerabilities WHERE id = 2";
+$query = "SELECT validated FROM vulnerabilities WHERE id = 8";
 $result = $conn->query($query);
 $row = $result->fetch_assoc();
 $validated = $row['validated'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'Désactiver') {
-        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 2";
+        $sql = "UPDATE vulnerabilities SET validated = FALSE WHERE id = 8";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape désactivée avec succès !";
             $alertType = "danger";
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $alertType = "danger";
         }
     } elseif ($action === 'Valider') {
-        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 2";
+        $sql = "UPDATE vulnerabilities SET validated = TRUE WHERE id = 8";
         if ($conn->query($sql) === TRUE) {
             $message = "Étape validée avec succès !";
             $alertType = "success";
@@ -66,13 +66,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 <?php endif; ?>
 
+<form method="post">
+    <input type="text" name="username" placeholder="Nom du fichier à inclure">
+    <button type="submit">Envoyer</button>
+</form>
 
 <?php
-if (isset($_GET['message'])) {
-    echo "Message : " . $_GET['message'];
+if (isset($_POST['username'])) {
+    $file = $_POST['username'];
+    include($file);
+
+    echo "Bienvenue ! Contenu du fichier inclus : " . htmlspecialchars($file);
 }
 ?>
-<a href="?message=Hello">Envoyer un message</a>
 
 <?php if ($validated): ?>
     <div style="position: fixed; bottom: 32px; right: 32px; max-width: 30%;">

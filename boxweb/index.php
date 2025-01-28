@@ -20,12 +20,6 @@ include("header.php");
             </div>
         </div>
 
-        <div class="index_card">
-            <div class="index_card-body">
-                <h5 class="index_card-title">CSRF</h5>
-                <a href="csrf.php" class="index_btn-custom">Voir plus</a>
-            </div>
-        </div>
 
         <div class="index_card">
             <div class="index_card-body">
@@ -40,21 +34,17 @@ include("header.php");
                 <a href="lfi.php" class="index_btn-custom">Voir plus</a>
             </div>
         </div>
-
         <div class="index_card">
             <div class="index_card-body">
-                <h5 class="index_card-title">XXE</h5>
-                <a href="xxe.php" class="index_btn-custom">Voir plus</a>
-            </div>
-        </div>
-
-        <div class="index_card index_last-item">
-            <div class="index_card-body">
                 <h5 class="index_card-title">Open Redirect</h5>
-                <a href="open_redirect.php" class="index_btn-custom">Voir plus</a>
+                <a href="or.php" class="index_btn-custom">Voir plus</a>
             </div>
         </div>
-
+        <div class="index_card">
+            <div class="index_card-body">
+                <h5 class="index_card-title">CSRF</h5>
+            </div>
+        </div>
     </div>
 </div>
 
