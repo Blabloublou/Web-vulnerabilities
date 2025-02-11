@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" style="width: 100%">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
                     </li>
@@ -37,6 +37,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="or.php">OR</a>
+                    </li>
+                    <li class="nav-item" style="margin-left: auto; margin-right: 24px;">
+                        <a class="nav-link" href="hydra.php">Login</a>
                     </li>
                 </ul>
 

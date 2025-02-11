@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 <?php endif; ?>
-
+<h1>Get password</h1>
 <form method="get">
     <label for="id">Entrez un identifiant utilisateur :</label>
     <input type="text" id="id" name="id" placeholder="identifiant">
@@ -73,11 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <?php
-if (isset($_GET['id']) && isset($_GET['username'])) {
-    $id = $_GET['id'];
-    $username = $_GET['username'];
 
-    $query = "SELECT * FROM users WHERE id = '$id' AND username = '$username'";
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $query = "SELECT username FROM users WHERE id = '$id'";
 
     echo "<p>Requête exécutée : <code>$query</code></p>";
 

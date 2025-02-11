@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 <?php endif; ?>
-
+<h1>Check vulnerability</h1>
 <form method="get">
     <label for="id">Entrez un identifiant utilisateur :</label>
     <input type="text" id="id" name="id" placeholder="identifiant">
@@ -79,7 +79,7 @@ if (isset($_GET['id']) && isset($_GET['username'])) {
 
     $id = str_replace("'", "", $id);
 
-    $query = "SELECT * FROM users WHERE id = '$id' AND username = '$username'";
+    $query = "SELECT * FROM users WHERE id = '$id'";
 
     echo "<p>Requête exécutée : <code>$query</code></p>";
 

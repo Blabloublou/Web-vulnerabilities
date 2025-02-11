@@ -2,9 +2,8 @@
 include("header.php");
 ?>
 
-<div class="main-container">
-    <h1>Bienvenue sur notre site vulnérable</h1>
-    <div class="index_main-grid">
+<div class="main-container" style="margin-top: 40px;">
+    <div class="index_main-grid" >
 
         <div class="index_card">
             <div class="index_card-body">

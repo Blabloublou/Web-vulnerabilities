@@ -40,7 +40,7 @@ if ($cardsResult->num_rows > 0) {
 ?>
 
 <div class="container">
-    <h1 class="h1">Failles CSRF</h1>
+    <h1 class="h1">Failles OR</h1>
 
     <div class="progress bar-lenght">
         <div
